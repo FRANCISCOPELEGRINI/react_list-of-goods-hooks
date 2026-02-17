@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bulma/css/bulma.css';
 import './App.scss';
-import { useState } from 'react';
 
 export const goodsFromServer = [
   'Dumplings',
@@ -16,42 +15,39 @@ export const goodsFromServer = [
   'Garlic',
 ];
 
-let goodsFromMyServer = goodsFromServer;
-// let goodsFromMyServer = goodsFromServer;
+const initialGoods = [...goodsFromServer];
+
+enum SortType {
+  None,
+  Alphabetically,
+  Length,
+  Reverse,
+}
 
 export const App: React.FC = () => {
-  const [btnLight, setBtnLight] = useState('');
+  const [goods, setGoods] = useState<string[]>(initialGoods);
 
-  function sort(sortBy: string) {
-    switch (sortBy) {
-      case 'SortAlphabetically':
-        setBtnLight('SortAlphabetically');
-        goodsFromMyServer = goodsFromMyServer.sort();
+  const [activeSort, setActiveSort] = useState<SortType>(SortType.None);
+
+  function handleSort(type: SortType) {
+    setActiveSort(type);
+
+    switch (type) {
+      case SortType.Alphabetically:
+        setGoods(prev => [...prev].sort((a, b) => a.localeCompare(b)));
         break;
-      case 'SortLength':
-        setBtnLight('SortLength');
-        goodsFromMyServer = goodsFromMyServer.sort(
-          (a, b) => b.length - a.length,
-        );
+
+      case SortType.Length:
+        setGoods(prev => [...prev].sort((a, b) => b.length - a.length));
         break;
-      case 'SortReserve':
-        setBtnLight('SortReserve');
-        goodsFromMyServer = goodsFromServer.reverse();
+
+      case SortType.Reverse:
+        setGoods(prev => [...prev].reverse());
         break;
-      case 'SortReset':
-        setBtnLight('SortReset');
-        goodsFromMyServer = [
-          'Dumplings',
-          'Carrot',
-          'Eggs',
-          'Ice cream',
-          'Apple',
-          'Bread',
-          'Fish',
-          'Honey',
-          'Jam',
-          'Garlic',
-        ];
+
+      case SortType.None:
+        setGoods([...initialGoods]);
+        break;
     }
   }
 
@@ -60,44 +56,43 @@ export const App: React.FC = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${btnLight !== 'SortAlphabetically' ? 'is-light' : ''}`}
-          onClick={() => sort('SortAlphabetically')}
+          className={`button is-info ${activeSort !== SortType.Alphabetically ? 'is-light' : ''}`}
+          onClick={() => handleSort(SortType.Alphabetically)}
         >
           Sort alphabetically
         </button>
 
         <button
           type="button"
-          className={`button is-info ${btnLight !== 'SortLength' ? 'is-light' : ''}`}
-          onClick={() => sort('SortLength')}
+          className={`button is-info ${activeSort !== SortType.Length ? 'is-light' : ''}`}
+          onClick={() => handleSort(SortType.Length)}
         >
           Sort by length
         </button>
 
         <button
           type="button"
-          className={`button is-info ${btnLight !== 'SortReserve' ? 'is-light' : ''}`}
-          onClick={() => sort('SortReserve')}
+          className={`button is-info ${activeSort !== SortType.Reverse ? 'is-light' : ''}`}
+          onClick={() => handleSort(SortType.Reverse)}
         >
           Reverse
         </button>
 
         <button
           type="button"
-          className={`button is-info ${btnLight !== 'SortReset' ? 'is-light' : ''}`}
-          onClick={() => sort('SortReset')}
+          className={`button is-info ${activeSort !== SortType.None ? 'is-light' : ''}`}
+          onClick={() => handleSort(SortType.None)}
         >
           Reset
         </button>
       </div>
+
       <ul>
-        <ul>
-          {goodsFromMyServer.map(r => (
-            <li data-cy="Good" key={r}>
-              {r}
-            </li>
-          ))}
-        </ul>
+        {goods.map(item => (
+          <li data-cy="Good" key={item}>
+            {item}
+          </li>
+        ))}
       </ul>
     </div>
   );
