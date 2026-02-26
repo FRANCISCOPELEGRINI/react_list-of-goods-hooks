@@ -51,59 +51,59 @@ export const App: React.FC = () => {
         setGoods([...initialGoods]);
         break;
     }
-
-    return (
-      <div className="section content">
-        <div className="buttons">
-          <button
-            type="button"
-            className={`button is-info ${
-              activeSort !== SortType.Alphabetically ? 'is-light' : ''
-            }`}
-            onClick={() => handleSort(SortType.Alphabetically)}
-          >
-            Sort alphabetically
-          </button>
-
-          <button
-            type="button"
-            className={`button is-info ${
-              activeSort !== SortType.Length ? 'is-light' : ''
-            }`}
-            onClick={() => handleSort(SortType.Length)}
-          >
-            Sort by length
-          </button>
-
-          <button
-            type="button"
-            className={`button is-info ${
-              activeSort !== SortType.Reverse ? 'is-light' : ''
-            }`}
-            onClick={() => handleSort(SortType.Reverse)}
-          >
-            Reverse
-          </button>
-
-          <button
-            type="button"
-            className={`button is-info ${
-              activeSort !== SortType.None ? 'is-light' : ''
-            }`}
-            onClick={() => handleSort(SortType.None)}
-          >
-            Reset
-          </button>
-        </div>
-
-        <ul>
-          {goods.map(item => (
-            <li data-cy="Good" key={item}>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
   }
+
+  return (
+    <div className="section content">
+      <div className="buttons">
+        <button
+          type="button"
+          className={`button is-info ${
+            activeSort !== SortType.Alphabetically ? 'is-light' : ''
+          }`}
+          onClick={() => handleSort(SortType.Alphabetically)}
+        >
+          Sort alphabetically
+        </button>
+
+        <button
+          type="button"
+          className={`button is-info ${
+            activeSort !== SortType.Length ? 'is-light' : ''
+          }`}
+          onClick={() => handleSort(SortType.Length)}
+        >
+          Sort by length
+        </button>
+
+        <button
+          type="button"
+          className={`button is-info ${
+            activeSort !== SortType.Reverse ? 'is-light' : ''
+          }`}
+          onClick={() => handleSort(SortType.Reverse)}
+        >
+          Reverse
+        </button>
+
+        <button
+          type="button"
+          className={`button is-info ${
+            activeSort !== SortType.None ? 'is-light' : ''
+          }`}
+          onClick={() => handleSort(SortType.None)}
+        >
+          Reset
+        </button>
+      </div>
+
+      <ul>
+        {goods.map(item => (
+          <li data-cy="Good" key={item}>
+            {item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
