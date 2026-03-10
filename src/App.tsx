@@ -33,15 +33,15 @@ export const App: React.FC = () => {
 
     switch (type) {
       case SortType.Alphabetically:
-        setGoods([...goods].sort((a, b) => a.localeCompare(b)));
+        setGoods(prev => [...prev].sort((a, b) => a.localeCompare(b)));
         break;
 
       case SortType.Length:
-        setGoods([...goods].sort((a, b) => a.length - b.length));
+        setGoods(prev => [...prev].sort((a, b) => a.length - b.length));
         break;
 
       case SortType.Reverse:
-        setGoods([...goods].reverse());
+        setGoods(prev => [...prev].reverse());
         break;
 
       case SortType.None:
