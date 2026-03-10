@@ -22,29 +22,26 @@ enum SortType {
   Alphabetically,
   Length,
   Reverse,
-  PalavraNaoReservadaJaToPutoComIssoTMNC,
 }
 
 export const App: React.FC = () => {
   const [goods, setGoods] = useState<string[]>(initialGoods);
-  const [activeSort, setActiveSort] = useState<SortType>(
-    SortType.PalavraNaoReservadaJaToPutoComIssoTMNC,
-  );
+  const [activeSort, setActiveSort] = useState<SortType>(SortType.None);
 
   function handleSort(type: SortType) {
     setActiveSort(type);
 
     switch (type) {
       case SortType.Alphabetically:
-        setGoods(prev => [...prev].sort((a, b) => a.localeCompare(b)));
+        setGoods([...goods].sort((a, b) => a.localeCompare(b)));
         break;
 
       case SortType.Length:
-        setGoods(prev => [...prev].sort((a, b) => a.length - b.length));
+        setGoods([...goods].sort((a, b) => a.length - b.length));
         break;
 
       case SortType.Reverse:
-        setGoods(prev => [...prev].reverse());
+        setGoods([...goods].reverse());
         break;
 
       case SortType.None:
@@ -86,15 +83,15 @@ export const App: React.FC = () => {
           Reverse
         </button>
 
-        <button
-          type="button"
-          className={`button is-info ${
-            activeSort !== SortType.None ? 'is-light' : ''
-          }`}
-          onClick={() => handleSort(SortType.None)}
-        >
-          Reset
-        </button>
+        {activeSort !== SortType.None && (
+          <button
+            type="button"
+            className="button is-warning"
+            onClick={() => handleSort(SortType.None)}
+          >
+            Reset
+          </button>
+        )}
       </div>
 
       <ul>
