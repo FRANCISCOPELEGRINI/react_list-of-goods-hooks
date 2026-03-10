@@ -42,6 +42,7 @@ export const App: React.FC = () => {
 
       case SortType.Reverse:
         setGoods(prev => [...prev].reverse());
+        // REVERSE CODE
         break;
 
       case SortType.None:
