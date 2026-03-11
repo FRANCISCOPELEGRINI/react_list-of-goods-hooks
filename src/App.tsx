@@ -33,6 +33,10 @@ export const App: React.FC = () => {
       setActiveSort(type);
     }
 
+    if (type !== SortType.None) {
+      setActiveSort(type);
+    }
+
     switch (type) {
       case SortType.Alphabetically:
         setGoods(prev => [...prev].sort((a, b) => a.localeCompare(b)));
