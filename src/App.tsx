@@ -29,7 +29,9 @@ export const App: React.FC = () => {
   const [activeSort, setActiveSort] = useState<SortType>(SortType.None);
 
   function handleSort(type: SortType) {
-    setActiveSort(type);
+    if (type !== SortType.Reverse) {
+      setActiveSort(type);
+    }
 
     switch (type) {
       case SortType.Alphabetically:
@@ -41,10 +43,7 @@ export const App: React.FC = () => {
         break;
 
       case SortType.Reverse:
-        const next = [...goods].reverse();
-
-        setGoods(next);
-        // REVERSE CODE
+        setGoods(prev => [...prev].reverse());
         break;
 
       case SortType.None:
