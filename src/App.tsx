@@ -27,6 +27,7 @@ export const App: React.FC = () => {
 
   const visibleGoods = [...goodsFromServer];
 
+  // SORT FIRST
   if (sortType === SortType.Alphabetically) {
     visibleGoods.sort((a, b) => a.localeCompare(b));
   }
@@ -35,11 +36,12 @@ export const App: React.FC = () => {
     visibleGoods.sort((a, b) => a.length - b.length);
   }
 
+  // THEN REVERSE
   if (isReversed) {
     visibleGoods.reverse();
   }
 
-  const reset = sortType !== SortType.None || isReversed;
+  const showReset = sortType !== SortType.None || isReversed;
 
   return (
     <div className="section content">
@@ -49,10 +51,7 @@ export const App: React.FC = () => {
           className={`button is-info ${
             sortType !== SortType.Alphabetically ? 'is-light' : ''
           }`}
-          onClick={() => {
-            setSortType(SortType.Alphabetically);
-            setIsReversed(false);
-          }}
+          onClick={() => setSortType(SortType.Alphabetically)}
         >
           Sort alphabetically
         </button>
@@ -62,10 +61,7 @@ export const App: React.FC = () => {
           className={`button is-info ${
             sortType !== SortType.Length ? 'is-light' : ''
           }`}
-          onClick={() => {
-            setSortType(SortType.Length);
-            setIsReversed(false);
-          }}
+          onClick={() => setSortType(SortType.Length)}
         >
           Sort by length
         </button>
@@ -78,7 +74,7 @@ export const App: React.FC = () => {
           Reverse
         </button>
 
-        {reset && (
+        {showReset && (
           <button
             type="button"
             className="button is-warning"
